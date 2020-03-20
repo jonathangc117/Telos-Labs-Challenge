@@ -1,0 +1,71 @@
+<h2> <%= @activity.title %> </h2>
+
+<div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+  <div class="mdl-tabs__tab-bar">
+      <a href="#log-panel" class="mdl-tabs__tab is-active">Logs</a>
+      <a href="#add-panel" class="mdl-tabs__tab">Add Activity</a>
+  </div>
+
+  <div class="mdl-tabs__panel is-active" id="log-panel">
+
+    <h3> Logs </h3>
+
+    <% @activity.logs.each do |log| %>
+
+      <div class="card">
+        <div class="card-header text-capitalize font-weight-bold">
+          <%= log.description %>
+        </div>
+        <div class="card-body">
+
+          <div class="card card-body bg-light">
+            <div class="d-flex justify-content-around">
+              <span> <%= log.day %> </span>
+              <span> <%= log.duration %> </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    <% end %>
+
+  </div>
+
+  <div class="mdl-tabs__panel" id="add-panel">
+
+    <h3> Log Activity </h1>
+
+    <%= form_for([@activity, @activity.logs.build]) do |f| %>
+      <% if @log.errors.any? %>
+
+        <% @log.errors.full_messages.each do |msg| %>
+          <div class="alert alert-danger"> <%= msg %> </div>
+        <% end %>
+      <% end %>
+
+      <div class="card card-body bg-light">
+        <p>
+          <%= f.label :description %> <br>
+          <%= f.text_field(:description, {:class => 'form-control'}) %>
+        </p>
+
+        <p>
+          <%= f.label :date %> <br>
+          <%= f.date_field(:day, {:class => 'form-control'}) %>
+        </p>
+
+        <p>
+          <%= f.label :duration %> <br>
+          <%= f.text_field(:duration, {:class => 'form-control'}) %>
+        </p>
+
+        <p>
+          <%= f.submit({:class => 'btn btn-primary'}) %>
+        </p>
+      </div>
+
+    <% end %>
+
+  </div>
+</div>
